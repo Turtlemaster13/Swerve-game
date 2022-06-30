@@ -1,0 +1,234 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://player/player.gd" type="Script" id=1]
+[ext_resource path="res://player/sprites/background.png" type="Texture" id=2]
+[ext_resource path="res://player/sprites/forgound.png" type="Texture" id=3]
+[ext_resource path="res://player/sprites/speeddial (1).png" type="Texture" id=4]
+[ext_resource path="res://player/resorces/robotMat.tres" type="Material" id=5]
+[ext_resource path="res://player/resorces/dustParticals.gdshader" type="Shader" id=6]
+[ext_resource path="res://player/resorces/colorable.tres" type="Material" id=7]
+
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 0.6, 0.1, 0.5 )
+
+[sub_resource type="CubeMesh" id=1]
+material = ExtResource( 5 )
+size = Vector3( 1, 0.2, 1 )
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 0.27451, 0.905882, 0.0470588, 1 )
+
+[sub_resource type="CubeMesh" id=6]
+material = SubResource( 5 )
+size = Vector3( 0.1, 0.1, 1 )
+
+[sub_resource type="CylinderMesh" id=7]
+material = ExtResource( 5 )
+top_radius = 0.2
+bottom_radius = 0.2
+height = 0.5
+
+[sub_resource type="PrismMesh" id=8]
+left_to_right = 0.9
+size = Vector3( 0.5, 0.5, 0.5 )
+
+[sub_resource type="ParticlesMaterial" id=19]
+spread = 90.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 4.0
+initial_velocity_random = 1.0
+
+[sub_resource type="CubeMesh" id=20]
+material = ExtResource( 7 )
+size = Vector3( 0.1, 0.1, 0.1 )
+
+[sub_resource type="SpatialMaterial" id=10]
+albedo_color = Color( 0.941176, 0.0156863, 0.0156863, 1 )
+
+[sub_resource type="CubeMesh" id=11]
+material = SubResource( 10 )
+size = Vector3( 0.1, 0.1, 0.9 )
+
+[sub_resource type="BoxShape" id=12]
+extents = Vector3( 0.1, 0.07, 0.7 )
+
+[sub_resource type="ParticlesMaterial" id=24]
+emission_shape = 2
+emission_box_extents = Vector3( 0.2, 0.2, 0.5 )
+direction = Vector3( -1, 0, 0 )
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 1.0
+
+[sub_resource type="ShaderMaterial" id=25]
+shader = ExtResource( 6 )
+shader_param/groundDistance = -0.01
+
+[sub_resource type="SphereMesh" id=22]
+material = SubResource( 25 )
+radius = 0.1
+height = 0.2
+
+[node name="player" type="KinematicBody"]
+script = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 2 )
+
+[node name="hud" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="hud"]
+margin_right = 264.0
+margin_bottom = 795.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="hud/VBoxContainer"]
+margin_right = 264.0
+margin_bottom = 147.0
+rect_min_size = Vector2( 147, 147 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="hud/VBoxContainer"]
+margin_top = 151.0
+margin_right = 264.0
+margin_bottom = 166.0
+rect_min_size = Vector2( 2, 0 )
+size_flags_stretch_ratio = 0.0
+meta_underlined = false
+tab_size = 5
+text = "Balls in the robot"
+fit_content_height = true
+
+[node name="TextureProgress" type="TextureProgress" parent="hud/VBoxContainer"]
+margin_top = 170.0
+margin_right = 264.0
+margin_bottom = 414.0
+rect_min_size = Vector2( 147, 244 )
+max_value = 2.0
+texture_under = ExtResource( 2 )
+texture_over = ExtResource( 3 )
+texture_progress = ExtResource( 2 )
+fill_mode = 3
+tint_under = Color( 0.184314, 0.164706, 0.164706, 1 )
+tint_over = Color( 0.0588235, 0.054902, 0.054902, 1 )
+tint_progress = Color( 0.133333, 0.0470588, 0.901961, 1 )
+nine_patch_stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer2" type="MarginContainer" parent="hud/VBoxContainer"]
+margin_top = 418.0
+margin_right = 264.0
+margin_bottom = 518.0
+rect_min_size = Vector2( 147, 100 )
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="hud/VBoxContainer"]
+margin_top = 522.0
+margin_right = 264.0
+margin_bottom = 537.0
+rect_min_size = Vector2( 2, 0 )
+size_flags_stretch_ratio = 0.0
+meta_underlined = false
+tab_size = 5
+text = "Speed:"
+fit_content_height = true
+
+[node name="TextureProgress2" type="TextureProgress" parent="hud/VBoxContainer"]
+margin_top = 541.0
+margin_right = 192.0
+margin_bottom = 733.0
+rect_min_size = Vector2( 80, 80 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.0
+max_value = 20.0
+step = 0.1
+rounded = true
+allow_greater = true
+texture_under = ExtResource( 4 )
+texture_progress = ExtResource( 4 )
+fill_mode = 4
+tint_under = Color( 0, 0, 0, 1 )
+tint_over = Color( 0.0431373, 0.556863, 0.207843, 1 )
+tint_progress = Color( 0.0196078, 0.580392, 0.239216, 1 )
+radial_initial_angle = 90.0
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( -0.00570716, 0.334081, -0.942527, 0, 0.942542, 0.334087, 0.999984, 0.00190669, -0.00537924, -8.97285, 5.71486, -0.16613 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = SubResource( 1 )
+skeleton = NodePath("")
+material/0 = null
+
+[node name="RayCast" type="RayCast" parent="MeshInstance"]
+transform = Transform( 0.00211187, -0.999998, 0, 0.999998, 0.00211187, 0, 0, 0, 1, -0.268946, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -5, 0 )
+debug_shape_thickness = 5.0
+
+[node name="front" type="MeshInstance" parent="MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.558119, 0, 0 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="feederneck" type="MeshInstance" parent="MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.135525, 0 )
+mesh = SubResource( 7 )
+material/0 = null
+
+[node name="hood" type="MeshInstance" parent="MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000722705, 0.582106, 0.0054208 )
+mesh = SubResource( 8 )
+material/0 = ExtResource( 5 )
+
+[node name="shootpoint" type="Position3D" parent="MeshInstance/hood"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.658583, 0.207101, 0 )
+
+[node name="shootparticals" type="Particles" parent="MeshInstance/hood"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.134038, 0, 0 )
+visible = false
+emitting = false
+amount = 6
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+visibility_aabb = AABB( -0.373176, -0.245288, -0.27707, 0.961195, 0.490577, 0.554139 )
+process_material = SubResource( 19 )
+draw_pass_1 = SubResource( 20 )
+
+[node name="intake" type="Area" parent="MeshInstance"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.00710797, 0, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="MeshInstance/intake"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.541767, 0, 0 )
+mesh = SubResource( 11 )
+skeleton = NodePath("../CollisionShape")
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="MeshInstance/intake"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.610701, 0, 0 )
+shape = SubResource( 12 )
+
+[node name="Particles" type="Particles" parent="MeshInstance/intake"]
+transform = Transform( 0.999998, 0.00193731, 0, -0.00193731, 0.999998, 0, 0, 0, 1, -0.756539, 0.114213, -0.0803784 )
+emitting = false
+amount = 7
+lifetime = 0.1
+fixed_fps = 120
+visibility_aabb = AABB( -0.864704, -0.271213, -0.467377, 1.3837, 0.384222, 0.992371 )
+local_coords = false
+process_material = SubResource( 24 )
+draw_pass_1 = SubResource( 22 )
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="body_entered" from="MeshInstance/intake" to="." method="_on_Area_body_entered"]

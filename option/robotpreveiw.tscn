@@ -1,0 +1,99 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://option/robotpreveiw.gd" type="Script" id=1]
+[ext_resource path="res://player/resorces/robotMat.tres" type="Material" id=2]
+
+[sub_resource type="CubeMesh" id=1]
+size = Vector3( 1, 0.2, 1 )
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 0.27451, 0.905882, 0.0470588, 1 )
+
+[sub_resource type="CubeMesh" id=6]
+material = SubResource( 5 )
+size = Vector3( 0.1, 0.1, 1 )
+
+[sub_resource type="CylinderMesh" id=7]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 0.5
+
+[sub_resource type="PrismMesh" id=8]
+left_to_right = 0.9
+size = Vector3( 0.5, 0.5, 0.5 )
+
+[sub_resource type="SpatialMaterial" id=10]
+albedo_color = Color( 0.941176, 0.0156863, 0.0156863, 1 )
+
+[sub_resource type="CubeMesh" id=11]
+material = SubResource( 10 )
+size = Vector3( 0.1, 0.1, 0.9 )
+
+[sub_resource type="ProceduralSky" id=12]
+
+[sub_resource type="Environment" id=13]
+background_mode = 3
+background_sky = SubResource( 12 )
+background_color = Color( 0.658824, 0.658824, 0.694118, 1 )
+
+[node name="robotpreveiw" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( -0.00570716, 0.334081, -0.942527, 0, 0.942542, 0.334087, 0.999984, 0.00190669, -0.00537924, -2.7312, 1.50551, 0 )
+
+[node name="Control" type="Control" parent="Camera"]
+margin_right = 1920.0
+margin_bottom = 1080.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="Camera/Control"]
+margin_right = 102.0
+margin_bottom = 40.0
+text = "Home"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="robot2" type="RigidBody" parent="."]
+mass = 0.00102041
+gravity_scale = 0.0
+
+[node name="MeshInstance" type="MeshInstance" parent="robot2"]
+mesh = SubResource( 1 )
+skeleton = NodePath("")
+material/0 = ExtResource( 2 )
+
+[node name="RayCast" type="RayCast" parent="robot2/MeshInstance"]
+transform = Transform( 0.00211187, -0.999998, 0, 0.999998, 0.00211187, 0, 0, 0, 1, -0.268946, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -5, 0 )
+debug_shape_thickness = 5.0
+
+[node name="front" type="MeshInstance" parent="robot2/MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.545195, 0, 0 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="feederneck" type="MeshInstance" parent="robot2/MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.135525, 0 )
+mesh = SubResource( 7 )
+material/0 = ExtResource( 2 )
+
+[node name="hood" type="MeshInstance" parent="robot2/MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00734663, 0.587664, 0 )
+mesh = SubResource( 8 )
+material/0 = ExtResource( 2 )
+
+[node name="MeshInstance" type="MeshInstance" parent="robot2/MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.541767, 0, 0 )
+mesh = SubResource( 11 )
+skeleton = NodePath("")
+material/0 = null
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 13 )
+
+[connection signal="pressed" from="Camera/Control/Button" to="." method="_on_Button_pressed"]
