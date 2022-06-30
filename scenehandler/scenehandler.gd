@@ -3,7 +3,7 @@ extends Node
 
 var _error #garbage collection
 
-var startscene = {
+var startscene = {#levels that I can switch the start to easliy 
 	mainlevel = "res://level/level.tscn"
 	#menu = 
 	#settings = 
